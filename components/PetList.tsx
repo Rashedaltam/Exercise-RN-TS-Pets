@@ -9,15 +9,32 @@ import React, { useState } from "react";
 import pets from "@/data/pets";
 import PetItem from "./PetItem";
 
+/// main component
 const PetList = () => {
-  const petList = pets.map((pet) => <PetItem key={pet.id} pet={pet} />);
+  const [query, setQuery] = useState("");
+
+// filter the data coming from pets 
+const filteer = pets.filter((pet) =>
+    pet.name.toLowerCase().includes(query.toLowerCase())
+  );
+/// save the new filtered data in a new variable.
+const newPetsData = pets.filter((pet) =>
+    pet.name.toLowerCase().includes(query.toLowerCase()));
+
+
+/// map the new variable 
+  const petList = newPetsData.map((pet) => <PetItem key={pet.id} pet={pet} />);
   return (
     <ScrollView
       contentContainerStyle={styles.container}
       style={styles.containerStyle}
     >
       {/* Search Input */}
-      <TextInput placeholder="Search for a pet" style={styles.searchInput} />
+      <TextInput 
+       onChangeText={(text)=> setQuery(text)}
+       value = {query}
+       placeholder="Search for a pet" style={styles.searchInput} />
+
 
       {/* Filter by type */}
       <ScrollView horizontal contentContainerStyle={styles.filterContainer}>

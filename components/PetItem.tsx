@@ -1,5 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import  React, { useState } from "react";
+import pets from "@/data/pets";
 
 interface PetItemProps {
   pet: {
@@ -11,12 +12,29 @@ interface PetItemProps {
     image2: string;
   };
 }
+const PetItem = ({ pet }:PetItemProps) => {
+const [currentImage, setCurrentImage] = useState(pet.image);
 
-const PetItem = ({ pet }: PetItemProps) => {
+// const changgingImagee = () => {
+//   if (currentImage === pet.image){
+//     setCurrentImage(pet.image2);
+// } else {
+//   setCurrentImage(pet.image);
+// }}
+// };
+ const changgingImagee = () => {
+    if (currentImage === pet.image) {
+      setCurrentImage(pet.image2);
+    } else {
+      setCurrentImage(pet.image);
+    }
+  };
+
+// const PetItem = ({ pet }: PetItemProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.petInfo}>
-        <Image source={{ uri: pet.image }} style={styles.image} />
+        <Image source={{ uri: currentImage }} style={styles.image} />
 
         <Text style={styles.name}>{pet.name}</Text>
 
@@ -24,7 +42,7 @@ const PetItem = ({ pet }: PetItemProps) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.petButton}>
+        <TouchableOpacity style={styles.petButton} onPress={changgingImagee}>
           <Text style={styles.buttonText}>Pet</Text>
         </TouchableOpacity>
 
